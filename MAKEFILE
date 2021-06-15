@@ -1,0 +1,28 @@
+DEBUG = FALSE
+
+!IF "$(DEBUG)" == "TRUE"
+COPT = /c /W3 /AL /Od /Zip /nologo
+LOPT = /CO/NOLOGO/NOD/NOE
+LIBS = os2 llibcep GnuLibD
+BIND = rem
+!ELSE
+COPT = /c /W3 /AL /Ox /Grs /Zp /nologo
+LOPT = /E/F/PACKC/NOLOGO/NOD/NOE
+LIBS = os2 llibcep GnuLibO
+BIND = bind $*.exe
+!ENDIF
+
+all : oreo.exe
+
+oreo.obj : oreo.c oreo.h
+  cl $(COPT) $*.c
+
+oreoTech.obj : oreoTech.c oreo.h
+  cl $(COPT) $*.c
+
+oreohelp.obj : oreohelp.c oreo.h
+  cl $(COPT) $*.c
+
+oreo.exe : oreo.obj oreotech.obj oreohelp.obj
+  link oreo oreotech oreohelp $(LOPT),,NUL,$(LIBS),$*.def
+  $(BIND)
